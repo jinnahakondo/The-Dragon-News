@@ -23,7 +23,7 @@ const CategoryNews = () => {
             setCatgoryNews(filteredNews)
         }
     }, [data, id])
-    console.log(categoryNews)
+
     return (
         <div>
             <h2 className="font-bold ">Dragon News Home</h2>
