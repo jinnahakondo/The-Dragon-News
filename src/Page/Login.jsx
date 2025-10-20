@@ -1,9 +1,13 @@
-import React, { use } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 
+
 const Login = () => {
+    const [error, setError] = useState('')
+    const navigate = useNavigate()
     const { login } = use(AuthContext);
+    const location = useLocation();
     const haneSignIn = e => {
         e.preventDefault();
         const form = e.target;
@@ -11,10 +15,15 @@ const Login = () => {
         const password = form.password.value;
         // console.log({ email, password })
         login(email, password)
-            .then(user => console.log(user.user))
-            .catch(error => console.log(error.message))
+            .then(user => {
+                // console.log(user.user)
+                navigate(`${location.state ? location.state : '/'}`)
+            })
+            .catch(error => setError(error.code))
     }
     return (
+
+
         <div className='grid place-items-center min-h-screen'>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
                 <h2 className='font-semibold text-2xl text-center py-10'>Login your account</h2>
@@ -25,6 +34,7 @@ const Login = () => {
                             <input type="email" name='email' className="input bg-base-200" placeholder="Email" />
                             <label className="label">Password</label>
                             <input type="password" name='password' className="input bg-base-200" placeholder="Password" />
+                            {error && <span className='text-red-500 text-xs'>{error}</span>}
                             <div><a className="link link-hover">Forgot password?</a></div>
                             <button type='submit' className="btn btn-neutral mt-4">Log in</button>
                         </fieldset>

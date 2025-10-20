@@ -5,14 +5,17 @@ import { AuthContext } from '../../Context/AuthContext';
 const Navbar = () => {
     const { user, logOut } = use(AuthContext)
     const handelLogOut = () => {
-        console.log("clicked")
+        // console.log("clicked")
         logOut()
             .then(() => alert('sign out successfull'))
             .catch(error => alert(error.message))
     }
     return (
         <div className='flex justify-between items-center'>
-            <div className='flex-1'></div>
+            <div className='flex-1'>
+
+                {user?.displayName}
+            </div>
             <div className='nav flex items-center gap-4 text-accent flex-1'>
                 <NavLink to={'/'}>Home</NavLink>
                 <NavLink to={'/about'}>About</NavLink>
